@@ -1,35 +1,115 @@
 # expo-animated-portal
 
-My new module
+A React Native wrapper around native Swift [Portal](https://github.com/Aeastr/Portal) library for creating beautiful animated transitions between views. Built using Expo modules.
 
-# API documentation
+> ⚠️ **Warning**: This is an experimental package and not recommended for production use. Currently only works on iOS.
 
-- [Documentation for the latest stable release](https://docs.expo.dev/versions/latest/sdk/animated-portal/)
-- [Documentation for the main branch](https://docs.expo.dev/versions/unversioned/sdk/animated-portal/)
+![Demo](./assets/demo.gif)
 
-# Installation in managed Expo projects
 
-For [managed](https://docs.expo.dev/archive/managed-vs-bare/) Expo projects, please follow the installation instructions in the [API documentation for the latest stable release](#api-documentation). If you follow the link and there is no documentation available then this library is not yet usable within managed projects &mdash; it is likely to be included in an upcoming Expo SDK release.
+## Requirements
+- iOS 15.0 or later
+- Expo SDK 49 or later
 
-# Installation in bare React Native projects
+## Credits
+This project is a React Native wrapper around the [Portal](https://github.com/Aeastr/Portal) Swift library by [Aeastr](https://github.com/Aeastr).
 
-For bare React Native projects, you must ensure that you have [installed and configured the `expo` package](https://docs.expo.dev/bare/installing-expo-modules/) before continuing.
+## Installation
 
-### Add the package to your npm dependencies
+### Installation in managed Expo projects
 
-```
+```bash
 npm install expo-animated-portal
 ```
 
-### Configure for Android
+### Installation in bare React Native projects
+
+For bare React Native projects, you must ensure that you have [installed and configured the `expo` package](https://docs.expo.dev/bare/installing-expo-modules/) before continuing.
+
+After installing `expo`:
+
+```bash
+npm install expo-animated-portal
+```
 
 
+## Documentation
+
+*Absent for now 🫠*
+
+## Usage
+
+Here's a basic example of how to use the animated portal. See the [example app](./example/app/index.tsx) for a more complete example.
+
+```tsx
+import * as AnimatedPortal from "expo-animated-portal";
+import React, { useState } from "react";
+import { View, Pressable, SafeAreaView, Dimensions } from "react-native";
+
+export default function App() {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const { width, height } = Dimensions.get("window");
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <AnimatedPortal.Root
+          portalId="testExpoTransition"
+          isActive={isModalVisible}
+          style={{ width: 150, height: 150 }}
+        >
+          <AnimatedPortal.Transition>
+            <ColoredBox />
+          </AnimatedPortal.Transition>
+
+          <AnimatedPortal.Source>
+            <Pressable onPress={() => setIsModalVisible(!isModalVisible)}>
+              <ColoredBox />
+            </Pressable>
+          </AnimatedPortal.Source>
+
+          <AnimatedPortal.Sheet
+            isOpened={isModalVisible}
+            onIsOpenedChange={setIsModalVisible}
+            style={{ width, height }}
+          >
+            <View style={{
+              alignItems: "center",
+              justifyContent: "center",
+              paddingTop: 100,
+            }}>
+              <AnimatedPortal.Destination>
+                <ColoredBox size={300} />
+              </AnimatedPortal.Destination>
+            </View>
+          </AnimatedPortal.Sheet>
+        </AnimatedPortal.Root>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+function ColoredBox({ size = 150 }) {
+  return (
+    <View
+      style={{
+        height: size,
+        width: size,
+        backgroundColor: "#EF445F",
+        borderRadius: 30,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    />
+  );
+}
+```
 
 
-### Configure for iOS
+## Contributing
 
-Run `npx pod-install` after installing the npm package.
+Contributions are very welcome! Please feel free to submit a Pull Request.
 
-# Contributing
+## License
 
-Contributions are very welcome! Please refer to guidelines described in the [contributing guide]( https://github.com/expo/expo#contributing).
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
