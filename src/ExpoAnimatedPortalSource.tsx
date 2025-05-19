@@ -17,8 +17,10 @@ export function ExpoAnimatedPortalSourcePrimitive(
 export function ExpoAnimatedPortalSource(props: ExpoAnimatedPortalSourceProps) {
   const { width } = Dimensions.get("window");
   return (
-    <Host matchContents>
+    // <Host  onLayoutContent={e => {
+    //   console.log("onLayoutContent from PortalSource", e.nativeEvent.height, e.nativeEvent.width)
+    // }}>
       <ExpoAnimatedPortalSourcePrimitive {...props} />
-    </Host>
+    //  </Host>
   );
 }

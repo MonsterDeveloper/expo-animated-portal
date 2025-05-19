@@ -12,7 +12,7 @@ struct ExpoAnimatedPortalContainer: ExpoSwiftUI.View {
 
     var body: some View {
         PortalContainer {
-            Children()
+            Children().border(.purple, width: 1)
         }
     }
 }

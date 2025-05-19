@@ -20,21 +20,24 @@ import {
 
 function ColoredBox({ label }: { label: string }) {
   return (
-    <View>
+    // <View style={{flex: 1}}>
       <View
         style={{
           height: 150,
           width: 150,
-          backgroundColor: "#EF445F",
-          borderRadius: 12,
+          // backgroundColor: "#EF445F",
+          // opacity: 0.5,
+          borderRadius: 30,
+          borderWidth: 1,
+          borderColor: "green",
           alignItems: "center",
           justifyContent: "center",
-          flex: 1,
+         
         }}
       >
-        <Text style={{ color: "white" }}>{label}</Text>
+        <Text style={{ color: "black" }}>{label}</Text>
       </View>
-    </View>
+      // </View>
   );
 }
 
@@ -42,30 +45,17 @@ export default function IndexScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.container}>
-        <Text style={styles.header}>Module API Example</Text>
-        {/* <Group name="Constants">
-          <Text>{ExpoAnimatedPortal.PI}</Text>
-        </Group>
-        <Group name="Functions">
-          <Text>{ExpoAnimatedPortal.hello()}</Text>
-        </Group>
-        <Group name="Async functions">
-          <Button
-            title="Set value"
-            onPress={async () => {
-              await ExpoAnimatedPortal.setValueAsync("Hello from JS!");
-            }}
-          />
-        </Group> */}
-        <Group name="Views">
+      <View style={[styles.container, {alignItems: "center", justifyContent: "center"}]}>
+        
           <Text>isModalVisible: {String(isModalVisible)}</Text>
           <Pressable onPress={() => setIsModalVisible(!isModalVisible)}>
             <Text>Press me</Text>
           </Pressable>
+
           <ExpoAnimatedPortalContainer
           // isActive={isModalVisible}
           // portalId="testExpoTransition"
+        style={{width: 150, height: 150}}
           >
             <ExpoAnimatedPortalTransition
               portalID="testExpoTransition"
@@ -76,20 +66,22 @@ export default function IndexScreen() {
             <ExpoAnimatedPortalSource portalID="testExpoTransition">
               <ColoredBox label="Source" />
             </ExpoAnimatedPortalSource>
+           
             <ExpoAnimatedPortalSheet
               isOpened={isModalVisible}
               onIsOpenedChange={setIsModalVisible}
+              // style={{ flex: 1}}
             >
-              <View style={{ flex: 1, height: 500, padding: 20, width: 100 }}>
+              <View style={{ alignItems: "center", justifyContent: "center", backgroundColor: "red"}}>
+                <Text>This is a sheet</Text>
                 <ExpoAnimatedPortalDestination portalID="testExpoTransition">
-                  <Text>Destination</Text>
+                  <ColoredBox label="Destination" />
                 </ExpoAnimatedPortalDestination>
-                <Text>PortalSheet</Text>
               </View>
+             
             </ExpoAnimatedPortalSheet>
           </ExpoAnimatedPortalContainer>
-        </Group>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }

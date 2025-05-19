@@ -43,8 +43,8 @@ export function ExpoAnimatedPortalSheetPrimitive(
 export function ExpoAnimatedPortalSheet(props: ExpoAnimatedPortalSheetProps) {
   const { width } = Dimensions.get("window");
   return (
-    <Host>
+    // <Host >
       <ExpoAnimatedPortalSheetPrimitive {...props} />
-    </Host>
+    // </Host>
   );
 }

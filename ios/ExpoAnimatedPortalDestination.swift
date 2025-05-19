@@ -13,8 +13,7 @@ struct ExpoAnimatedPortalDestination: ExpoSwiftUI.View {
     }
 
     var body: some View {
-        Image(systemName: "gearshape.fill")
-            .font(.title)
+        Children().border(.orange, width: 2)
             .portalDestination(id: props.portalID)
     }
 }

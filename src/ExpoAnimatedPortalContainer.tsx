@@ -5,15 +5,11 @@ import { Dimensions } from "react-native";
 import { ExpoAnimatedPortalContainerProps } from "./ExpoAnimatedPortal.types";
 import { Host } from "./Host";
 
-const NativeView: React.ComponentType<{ isActive: boolean; portalID: string }> =
+const NativeView: React.ComponentType<ExpoAnimatedPortalContainerProps> =
   requireNativeView("ExpoAnimatedPortal", "ExpoAnimatedPortalContainer");
 
-export function ExpoAnimatedPortalContainerPrimitive({
-  portalId,
-  isActive,
-  ...props
-}: ExpoAnimatedPortalContainerProps) {
-  return <NativeView isActive={isActive} portalID={portalId} {...props} />;
+export function ExpoAnimatedPortalContainerPrimitive(props: ExpoAnimatedPortalContainerProps) {
+  return <NativeView  {...props} />;
 }
 
 export function ExpoAnimatedPortalContainer(
@@ -21,7 +17,9 @@ export function ExpoAnimatedPortalContainer(
 ) {
   const { width } = Dimensions.get("window");
   return (
-    <Host matchContents>
+    <Host onLayoutContent={e => {
+      console.log("onLayoutContent from PortalContainer", e.nativeEvent.height, e.nativeEvent.width)
+    }}>
       <ExpoAnimatedPortalContainerPrimitive {...props} />
     </Host>
   );
