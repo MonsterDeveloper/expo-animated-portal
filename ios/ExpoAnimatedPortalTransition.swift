@@ -25,11 +25,12 @@ struct ExpoAnimatedPortalTransition: ExpoSwiftUI.View {
         .portalTransition( // Step 4
             id: props.portalID,
             isActive: $isActive,
-            animation: .smooth(duration: 0.5),
-            animationDuration: 0.5
+            animation: scaleAnimation,
+            animationDuration: transitionDuration * 2
         ) {
-            Image(systemName: "gearshape.fill")
-                .font(.title)
+            ScaleTransitionView(id: props.portalID) {
+                Children()
+            }
         }
     }
 }

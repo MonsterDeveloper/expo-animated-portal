@@ -16,28 +16,25 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
+  Dimensions,
 } from "react-native";
 
-function ColoredBox({ label }: { label: string }) {
+function ColoredBox({ size = 150 }: { size?: number }) {
   return (
     // <View style={{flex: 1}}>
       <View
         style={{
-          height: 150,
-          width: 150,
-          // backgroundColor: "#EF445F",
-          // opacity: 0.5,
+          height: size,
+          width: size,
+          backgroundColor: "#EF445F",
           borderRadius: 30,
-          borderWidth: 1,
-          borderColor: "green",
+          // borderWidth: 1,
+          // borderColor: "green",
           alignItems: "center",
           justifyContent: "center",
          
         }}
-      >
-        <Text style={{ color: "black" }}>{label}</Text>
-      </View>
-      // </View>
+      />
   );
 }
 
@@ -46,12 +43,6 @@ export default function IndexScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.container, {alignItems: "center", justifyContent: "center"}]}>
-        
-          <Text>isModalVisible: {String(isModalVisible)}</Text>
-          <Pressable onPress={() => setIsModalVisible(!isModalVisible)}>
-            <Text>Press me</Text>
-          </Pressable>
-
           <ExpoAnimatedPortalContainer
           // isActive={isModalVisible}
           // portalId="testExpoTransition"
@@ -61,21 +52,22 @@ export default function IndexScreen() {
               portalID="testExpoTransition"
               isActive={isModalVisible}
             >
-              <ColoredBox label="Transition" />
+              <ColoredBox />
             </ExpoAnimatedPortalTransition>
             <ExpoAnimatedPortalSource portalID="testExpoTransition">
-              <ColoredBox label="Source" />
+              <Pressable onPress={() => setIsModalVisible(!isModalVisible)}>
+                <ColoredBox />
+              </Pressable>
             </ExpoAnimatedPortalSource>
            
             <ExpoAnimatedPortalSheet
               isOpened={isModalVisible}
               onIsOpenedChange={setIsModalVisible}
-              // style={{ flex: 1}}
+              style={{ width: Dimensions.get("window").width, height: Dimensions.get("window").height}}
             >
-              <View style={{ alignItems: "center", justifyContent: "center", backgroundColor: "red"}}>
-                <Text>This is a sheet</Text>
+              <View style={{ alignItems: "center", justifyContent: "center", paddingTop: 150}}>
                 <ExpoAnimatedPortalDestination portalID="testExpoTransition">
-                  <ColoredBox label="Destination" />
+                  <ColoredBox size={300} />
                 </ExpoAnimatedPortalDestination>
               </View>
              

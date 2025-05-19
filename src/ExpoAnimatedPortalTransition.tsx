@@ -19,8 +19,8 @@ export function ExpoAnimatedPortalTransition(
 ) {
   const { width } = Dimensions.get("window");
   return (
-    <Host style={{ width }}>
+    // <Host style={{ width }}>
       <ExpoAnimatedPortalTransitionPrimitive {...props} />
-    </Host>
+    // </Host>
   );
 }

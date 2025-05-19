@@ -13,8 +13,9 @@ struct ExpoAnimatedPortalSource: ExpoSwiftUI.View {
     }
 
     var body: some View {
-        Children()
-            .border(.blue, width: 3)
-            .portalSource(id: props.portalID)
+        ScaleTransitionView(id: props.portalID) {
+            Children()
+        }
+        .portalSource(id: props.portalID)
     }
 }
