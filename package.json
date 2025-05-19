@@ -38,6 +38,8 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@types/react": "~19.0.0",
+    "eslint-config-universe": "^15.0.3",
+    "eslint-plugin-prettier": "^5.4.0",
     "expo": "~53.0.0",
     "expo-module-scripts": "^4.1.6",
     "husky": "^9.1.7",

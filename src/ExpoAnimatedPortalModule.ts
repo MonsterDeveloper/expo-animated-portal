@@ -1,6 +1,6 @@
-import { NativeModule, requireNativeModule } from 'expo';
+import { NativeModule, requireNativeModule } from "expo";
 
-import { ExpoAnimatedPortalModuleEvents } from './ExpoAnimatedPortal.types';
+import { ExpoAnimatedPortalModuleEvents } from "./ExpoAnimatedPortal.types";
 
 declare class ExpoAnimatedPortalModule extends NativeModule<ExpoAnimatedPortalModuleEvents> {
   PI: number;
@@ -9,4 +9,6 @@ declare class ExpoAnimatedPortalModule extends NativeModule<ExpoAnimatedPortalMo
 }
 
 // This call loads the native module object from the JSI.
-export default requireNativeModule<ExpoAnimatedPortalModule>('ExpoAnimatedPortal');
+export default requireNativeModule<ExpoAnimatedPortalModule>(
+  "ExpoAnimatedPortal"
+);

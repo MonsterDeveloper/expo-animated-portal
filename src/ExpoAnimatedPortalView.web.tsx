@@ -1,8 +1,10 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { ExpoAnimatedPortalViewProps } from './ExpoAnimatedPortal.types';
+import { ExpoAnimatedPortalViewProps } from "./ExpoAnimatedPortal.types";
 
-export default function ExpoAnimatedPortalView(props: ExpoAnimatedPortalViewProps) {
+export default function ExpoAnimatedPortalView(
+  props: ExpoAnimatedPortalViewProps
+) {
   return (
     <div>
       <iframe
