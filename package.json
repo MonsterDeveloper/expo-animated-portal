@@ -5,6 +5,7 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
+    "typecheck": "tsc --noEmit",
     "build": "expo-module build",
     "clean": "expo-module clean",
     "lint": "expo-module lint",
@@ -19,7 +20,11 @@
     "react-native",
     "expo",
     "expo-animated-portal",
-    "ExpoAnimatedPortal"
+    "ExpoAnimatedPortal",
+    "shared-element",
+    "animation",
+    "transition",
+    "swiftui"
   ],
   "repository": "https://github.com/MonsterDeveloper/expo-animated-portal",
   "bugs": {
