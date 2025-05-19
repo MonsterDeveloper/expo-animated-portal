@@ -20,7 +20,6 @@ import UIKit
 /// ```
 public struct PortalContainer<Content: View>: View {
     @ViewBuilder public var content: Content
-    @Environment(\.scenePhase) private var scene
     @StateObject private var portalModel = CrossModel()
     private let hideStatusBar: Bool
     
@@ -40,30 +39,39 @@ public struct PortalContainer<Content: View>: View {
     public var body: some View {
         content
             .onAppear {
-                setupWindow(scene)
+                setupOverlayWindow()
             }
-            .onDisappear() {
+            .onDisappear {
                 OverlayWindowManager.shared.removeOverlayWindow()
             }
-            .onChangeCompat(of: scene) { newValue in
-                setupWindow(newValue)
-            }
             .environmentObject(portalModel)
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                setupOverlayWindow()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+                OverlayWindowManager.shared.removeOverlayWindow()
+            }
     }
     
-    private func setupWindow(_ scenePhase: ScenePhase) {
-#if canImport(UIKit)
-        if scenePhase == .active {
-            print("add overlay")
+    private func setupOverlayWindow() {
+        #if canImport(UIKit)
+           
+        if isSceneActive() {
             OverlayWindowManager.shared.addOverlayWindow(
                 with: portalModel,
                 hideStatusBar: hideStatusBar
             )
         } else {
-            print("remove overlay")
-            OverlayWindowManager.shared.removeOverlayWindow()
+            print("[ExpoAnimatedPortal] Scene is not determined to be active (UIKit check). Overlay window will not be added at this moment.")
         }
-#endif
+        #else
+        print("[ExpoAnimatedPortal] setupOverlayWindow: UIKit not available.")
+        #endif
+    }
+
+    @MainActor
+    private func isSceneActive() -> Bool {
+        return UIApplication.shared.connectedScenes.contains { $0.activationState == .foregroundActive }
     }
 }
 
@@ -76,10 +84,9 @@ public struct PortalContainer<Content: View>: View {
 /// MyView()
 ///     .portalContainer(hideStatusBar: false)
 /// ```
-extension View {
-    
+public extension View {
     @ViewBuilder
-    public func portalContainer(hideStatusBar: Bool = true) -> some View {
+    func portalContainer(hideStatusBar: Bool = true) -> some View {
         PortalContainer(hideStatusBar: hideStatusBar) {
             self
         }
@@ -131,9 +138,9 @@ final class OverlayWindowManager {
                 
                 window.rootViewController = root
                 guard self.overlayWindow == nil else {
-                    
-                        print("overlayWindow populated, return")
-                    return }
+                    print("overlayWindow populated, return")
+                    return
+                }
                 self.overlayWindow = window
                 break
             }

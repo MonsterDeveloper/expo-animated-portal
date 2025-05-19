@@ -23,8 +23,10 @@ export default function App() {
           />
         </Group>
         <Group name="Views">
-          <ExpoAnimatedPortalContainer style={{ flex: 1, height: 300 }}>
-            <Text>Hello from JS!</Text>
+          <ExpoAnimatedPortalContainer
+            style={{ flex: 1, height: 300, backgroundColor: "blue" }}
+          >
+            <Text>Hello from JS!213</Text>
           </ExpoAnimatedPortalContainer>
         </Group>
       </ScrollView>
