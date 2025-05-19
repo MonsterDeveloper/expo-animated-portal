@@ -13,9 +13,11 @@ struct ExpoAnimatedPortalContainer: ExpoSwiftUI.View {
   }
 
   var body: some View {
-    VStack {
-      Text("ExpoAnimatedPortal Container")
-      Children()
+    PortalContainer {
+      VStack {
+        Text("Hi from Swift! I'm in PortalContainer")
+        Children()
+      }
     }
   }
 }
