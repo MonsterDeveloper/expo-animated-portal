@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "expo-animated-portal": ["../src/index"],
+      "expo-animated-portal/*": ["../src/*"]
+    }
+  }
+}

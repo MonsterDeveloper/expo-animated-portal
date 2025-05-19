@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android", "web"],
+  "apple": {
+    "modules": ["ExpoAnimatedPortalModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.animatedportal.ExpoAnimatedPortalModule"]
+  }
+}
