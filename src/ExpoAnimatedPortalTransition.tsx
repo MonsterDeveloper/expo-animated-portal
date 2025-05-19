@@ -1,26 +1,28 @@
 import { requireNativeView } from "expo";
 import * as React from "react";
-import { Dimensions } from "react-native";
 
-import { ExpoAnimatedPortalTransitionProps } from "./ExpoAnimatedPortal.types";
-import { Host } from "./Host";
+import {
+  ExpoAnimatedPortalTransitionProps,
+  useAnimatedPortalContext,
+} from "./ExpoAnimatedPortal.types";
 
-const NativeView: React.ComponentType<ExpoAnimatedPortalTransitionProps> =
-  requireNativeView("ExpoAnimatedPortal", "ExpoAnimatedPortalTransition");
+type NativeProps = ExpoAnimatedPortalTransitionProps & {
+  isActive: boolean;
+  portalID: string;
+};
 
-export function ExpoAnimatedPortalTransitionPrimitive(
-  props: ExpoAnimatedPortalTransitionProps
-) {
-  return <NativeView {...props} />;
-}
+const NativeView: React.ComponentType<NativeProps> = requireNativeView(
+  "ExpoAnimatedPortal",
+  "ExpoAnimatedPortalTransition"
+);
 
+/**
+ * A view containing the overlay which is used to transition the content from source to destination.
+ */
 export function ExpoAnimatedPortalTransition(
   props: ExpoAnimatedPortalTransitionProps
 ) {
-  const { width } = Dimensions.get("window");
-  return (
-    // <Host style={{ width }}>
-      <ExpoAnimatedPortalTransitionPrimitive {...props} />
-    // </Host>
-  );
+  const { portalId, isActive } = useAnimatedPortalContext();
+
+  return <NativeView {...props} portalID={portalId} isActive={isActive} />;
 }

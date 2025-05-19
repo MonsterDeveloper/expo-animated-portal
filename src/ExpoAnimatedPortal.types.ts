@@ -1,26 +1,20 @@
-import { ReactNode } from "react";
+import { createContext, ReactNode, useContext } from "react";
 import type { StyleProp, ViewStyle } from "react-native";
 
 export type ExpoAnimatedPortalContainerProps = {
   style?: StyleProp<ViewStyle>;
-  // isActive: boolean;
-  // portalId: string;
   children: ReactNode;
 };
 
 export type ExpoAnimatedPortalSourceProps = {
-  portalID: string;
   children: ReactNode;
 };
 
 export type ExpoAnimatedPortalDestinationProps = {
-  portalID: string;
   children: ReactNode;
 };
 
 export type ExpoAnimatedPortalTransitionProps = {
-  portalID: string;
-  isActive: boolean;
   children: ReactNode;
 };
 
@@ -37,4 +31,29 @@ export type ExpoAnimatedPortalSheetProps = {
    * Callback function that is called when the `BottomSheet` is opened.
    */
   onIsOpenedChange: (isOpened: boolean) => void;
+  style?: StyleProp<ViewStyle>;
 };
+
+export type AnimatedPortalContextType = {
+  portalId: string;
+  isActive: boolean;
+};
+
+const AnimatedPortalContext = createContext<AnimatedPortalContextType>({
+  portalId: "",
+  isActive: false,
+});
+
+export const AnimatedPortalContextProvider = AnimatedPortalContext.Provider;
+
+export function useAnimatedPortalContext() {
+  const context = useContext(AnimatedPortalContext);
+
+  if (!context) {
+    throw new Error(
+      "[expo-animated-portal] useAnimatedPortalContext must be used within a AnimatedPortalContextProvider. Did you forget to wrap the portal with <AnimatedPortal.Root>?"
+    );
+  }
+
+  return context;
+}

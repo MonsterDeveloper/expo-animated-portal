@@ -1,26 +1,34 @@
 import { requireNativeView } from "expo";
 import * as React from "react";
-import { Dimensions } from "react-native";
 
-import { ExpoAnimatedPortalDestinationProps } from "./ExpoAnimatedPortal.types";
+import {
+  ExpoAnimatedPortalDestinationProps,
+  useAnimatedPortalContext,
+} from "./ExpoAnimatedPortal.types";
 import { Host } from "./Host";
 
-const NativeView: React.ComponentType<ExpoAnimatedPortalDestinationProps> =
-  requireNativeView("ExpoAnimatedPortal", "ExpoAnimatedPortalDestination");
+type NativeProps = ExpoAnimatedPortalDestinationProps & { portalID: string };
 
-export function ExpoAnimatedPortalDestinationPrimitive(
-  props: ExpoAnimatedPortalDestinationProps
-) {
+const NativeView: React.ComponentType<NativeProps> = requireNativeView(
+  "ExpoAnimatedPortal",
+  "ExpoAnimatedPortalDestination"
+);
+
+export function ExpoAnimatedPortalDestinationPrimitive(props: NativeProps) {
   return <NativeView {...props} />;
 }
 
+/**
+ * A view that is used as a destination for the transition.
+ */
 export function ExpoAnimatedPortalDestination(
   props: ExpoAnimatedPortalDestinationProps
 ) {
-  const { width } = Dimensions.get("window");
+  const { portalId } = useAnimatedPortalContext();
+
   return (
     <Host matchContents>
-      <ExpoAnimatedPortalDestinationPrimitive {...props} />
+      <ExpoAnimatedPortalDestinationPrimitive {...props} portalID={portalId} />
     </Host>
   );
 }

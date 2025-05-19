@@ -1,89 +1,75 @@
-import ExpoAnimatedPortal, {
-  ExpoAnimatedPortalContainer,
-  ExpoAnimatedPortalDestination,
-  ExpoAnimatedPortalSheet,
-  ExpoAnimatedPortalSource,
-  ExpoAnimatedPortalTransition,
-} from "expo-animated-portal";
-import { Link } from "expo-router";
+import * as AnimatedPortal from "expo-animated-portal";
 import React, { useState } from "react";
 import {
-  Text,
   View,
-  Modal,
-  Button,
   Pressable,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   Dimensions,
 } from "react-native";
 
-function ColoredBox({ size = 150 }: { size?: number }) {
-  return (
-    // <View style={{flex: 1}}>
-      <View
-        style={{
-          height: size,
-          width: size,
-          backgroundColor: "#EF445F",
-          borderRadius: 30,
-          // borderWidth: 1,
-          // borderColor: "green",
-          alignItems: "center",
-          justifyContent: "center",
-         
-        }}
-      />
-  );
-}
-
 export default function IndexScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const { width, height } = Dimensions.get("window");
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={[styles.container, {alignItems: "center", justifyContent: "center"}]}>
-          <ExpoAnimatedPortalContainer
-          // isActive={isModalVisible}
-          // portalId="testExpoTransition"
-        style={{width: 150, height: 150}}
-          >
-            <ExpoAnimatedPortalTransition
-              portalID="testExpoTransition"
-              isActive={isModalVisible}
-            >
+      <View
+        style={[
+          styles.container,
+          { alignItems: "center", justifyContent: "center" },
+        ]}
+      >
+        <AnimatedPortal.Root
+          portalId="testExpoTransition"
+          isActive={isModalVisible}
+          style={{ width: 150, height: 150 }}
+        >
+          <AnimatedPortal.Transition>
+            <ColoredBox />
+          </AnimatedPortal.Transition>
+
+          <AnimatedPortal.Source>
+            <Pressable onPress={() => setIsModalVisible(!isModalVisible)}>
               <ColoredBox />
-            </ExpoAnimatedPortalTransition>
-            <ExpoAnimatedPortalSource portalID="testExpoTransition">
-              <Pressable onPress={() => setIsModalVisible(!isModalVisible)}>
-                <ColoredBox />
-              </Pressable>
-            </ExpoAnimatedPortalSource>
-           
-            <ExpoAnimatedPortalSheet
-              isOpened={isModalVisible}
-              onIsOpenedChange={setIsModalVisible}
-              style={{ width: Dimensions.get("window").width, height: Dimensions.get("window").height}}
+            </Pressable>
+          </AnimatedPortal.Source>
+
+          <AnimatedPortal.Sheet
+            isOpened={isModalVisible}
+            onIsOpenedChange={setIsModalVisible}
+            style={{ width, height }}
+          >
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                paddingTop: 100,
+              }}
             >
-              <View style={{ alignItems: "center", justifyContent: "center", paddingTop: 150}}>
-                <ExpoAnimatedPortalDestination portalID="testExpoTransition">
-                  <ColoredBox size={300} />
-                </ExpoAnimatedPortalDestination>
-              </View>
-             
-            </ExpoAnimatedPortalSheet>
-          </ExpoAnimatedPortalContainer>
+              <AnimatedPortal.Destination>
+                <ColoredBox size={300} />
+              </AnimatedPortal.Destination>
+            </View>
+          </AnimatedPortal.Sheet>
+        </AnimatedPortal.Root>
       </View>
     </SafeAreaView>
   );
 }
 
-function Group(props: { name: string; children: React.ReactNode }) {
+function ColoredBox({ size = 150 }: { size?: number }) {
   return (
-    <View style={styles.group}>
-      <Text style={styles.groupHeader}>{props.name}</Text>
-      {props.children}
-    </View>
+    <View
+      style={{
+        height: size,
+        width: size,
+        backgroundColor: "#EF445F",
+        borderRadius: 30,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    />
   );
 }
 
@@ -95,14 +81,6 @@ const styles = StyleSheet.create({
   groupHeader: {
     fontSize: 20,
     marginBottom: 20,
-  },
-  group: {
-    margin: 20,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    padding: 20,
-    // alignItems: "flex-start",
-    // justifyContent: "flex-start",
   },
   container: {
     flex: 1,
