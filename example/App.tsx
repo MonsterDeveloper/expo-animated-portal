@@ -1,9 +1,20 @@
 import ExpoAnimatedPortal, {
   ExpoAnimatedPortalContainer,
+  ExpoAnimatedPortalSource,
 } from "expo-animated-portal";
-import { Button, SafeAreaView, ScrollView, Text, View } from "react-native";
+import { useState } from "react";
+import {
+  Button,
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 
 export default function App() {
+  const [isActive, setIsActive] = useState(false);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
@@ -23,10 +34,19 @@ export default function App() {
           />
         </Group>
         <Group name="Views">
+          <Text>{String(isActive)}</Text>
+          <Pressable onPress={() => setIsActive(!isActive)}>
+            <Text>Press me</Text>
+          </Pressable>
           <ExpoAnimatedPortalContainer
+            portalId="testExpoTransition"
+            isActive={isActive}
             style={{ flex: 1, height: 300, backgroundColor: "blue" }}
           >
             <Text>Hello from JS!213</Text>
+            <ExpoAnimatedPortalSource portalID="testExpoTransition">
+              <Text>Hello from ExpoAnimatedPortalSource</Text>
+            </ExpoAnimatedPortalSource>
           </ExpoAnimatedPortalContainer>
         </Group>
       </ScrollView>
