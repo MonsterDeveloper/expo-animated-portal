@@ -1,8 +1,6 @@
 import { NativeModule, requireNativeModule } from "expo";
 
-import { ExpoAnimatedPortalModuleEvents } from "./ExpoAnimatedPortal.types";
-
-declare class ExpoAnimatedPortalModule extends NativeModule<ExpoAnimatedPortalModuleEvents> {
+declare class ExpoAnimatedPortalModule extends NativeModule {
   PI: number;
   hello(): string;
   setValueAsync(value: string): Promise<void>;

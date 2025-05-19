@@ -6,7 +6,7 @@
   "types": "build/index.d.ts",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "expo-module build",
+    "dev": "expo-module build",
     "clean": "expo-module clean",
     "lint": "expo-module lint",
     "test": "expo-module test",

@@ -15,8 +15,6 @@ public class ExpoAnimatedPortalModule: Module {
       "PI": Double.pi
     ])
 
-    // Defines event names that the module can send to JavaScript.
-    Events("onChange")
 
     // Defines a JavaScript synchronous function that runs the native code on the JavaScript thread.
     Function("hello") {
@@ -27,22 +25,8 @@ public class ExpoAnimatedPortalModule: Module {
     // is by default dispatched on the different thread than the JavaScript runtime runs on.
     AsyncFunction("setValueAsync") { (value: String) in
       // Send an event to JavaScript.
-      self.sendEvent("onChange", [
-        "value": value
-      ])
     }
-
-    // Enables the module to be used as a native view. Definition components that are accepted as part of the
-    // view definition: Prop, Events.
-    View(ExpoAnimatedPortalView.self) {
-      // Defines a setter for the `url` prop.
-      Prop("url") { (view: ExpoAnimatedPortalView, url: URL) in
-        if view.webView.url != url {
-          view.webView.load(URLRequest(url: url))
-        }
-      }
-
-      Events("onLoad")
-    }
+    View(ExpoAnimatedPortalContainer.self) {}
+    View(HostView.self) {}
   }
 }

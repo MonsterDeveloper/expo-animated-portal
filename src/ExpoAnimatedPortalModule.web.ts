@@ -1,12 +1,8 @@
 import { registerWebModule, NativeModule } from "expo";
 
-import { ExpoAnimatedPortalModuleEvents } from "./ExpoAnimatedPortal.types";
-
-class ExpoAnimatedPortalModule extends NativeModule<ExpoAnimatedPortalModuleEvents> {
+class ExpoAnimatedPortalModule extends NativeModule {
   PI = Math.PI;
-  async setValueAsync(value: string): Promise<void> {
-    this.emit("onChange", { value });
-  }
+  async setValueAsync(value: string): Promise<void> {}
   hello() {
     return "Hello world! 👋";
   }

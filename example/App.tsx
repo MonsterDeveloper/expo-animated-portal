@@ -1,10 +1,9 @@
-import { useEvent } from 'expo';
-import ExpoAnimatedPortal, { ExpoAnimatedPortalView } from 'expo-animated-portal';
-import { Button, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import ExpoAnimatedPortal, {
+  ExpoAnimatedPortalContainer,
+} from "expo-animated-portal";
+import { Button, SafeAreaView, ScrollView, Text, View } from "react-native";
 
 export default function App() {
-  const onChangePayload = useEvent(ExpoAnimatedPortal, 'onChange');
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
@@ -19,19 +18,14 @@ export default function App() {
           <Button
             title="Set value"
             onPress={async () => {
-              await ExpoAnimatedPortal.setValueAsync('Hello from JS!');
+              await ExpoAnimatedPortal.setValueAsync("Hello from JS!");
             }}
           />
         </Group>
-        <Group name="Events">
-          <Text>{onChangePayload?.value}</Text>
-        </Group>
         <Group name="Views">
-          <ExpoAnimatedPortalView
-            url="https://www.example.com"
-            onLoad={({ nativeEvent: { url } }) => console.log(`Loaded: ${url}`)}
-            style={styles.view}
-          />
+          <ExpoAnimatedPortalContainer style={{ flex: 1, height: 300 }}>
+            <Text>Hello from JS!</Text>
+          </ExpoAnimatedPortalContainer>
         </Group>
       </ScrollView>
     </SafeAreaView>
@@ -58,13 +52,13 @@ const styles = {
   },
   group: {
     margin: 20,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 10,
     padding: 20,
   },
   container: {
     flex: 1,
-    backgroundColor: '#eee',
+    backgroundColor: "#eee",
   },
   view: {
     flex: 1,
